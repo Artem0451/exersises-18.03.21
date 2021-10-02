@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	setlocale(0, "ru");
+	int a=1, b=1, c, d, e, n;
+	cout << "Нахождение факториала" << endl << "\n";
+	cout << "Введите факториал числа n= ";
+	cin >> n;
+	cout << "последовательность факториала: ";
+	for (int i = 0; i < n; i++) {
+		a = a * b;
+		b = b + 1;
+		cout << a <<" ";
+	}
+	cout << endl <<"Ответ " << n << "!= " << a;
+}
