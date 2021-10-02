@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+void Merge(int* A, int first, int last) //сортировка слиянием{
+{
+	int middle, start, final, j;
+	int* mas = new int[100];
+	middle = (first + last) / 2;
+	start = first;
+	final = middle + 1;
+	for (j = first; j <= last; j++)
+		if ((start <= middle) && ((final > last) || (A[start] < A[final])))
+		{
+			mas[j] = A[start];
+			start++;
+		}
+		else
+		{
+			mas[j] = A[final];
+			final++;
+		}
+	for (j = first; j <= last; j++) A[j] = mas[j];
+	delete[]mas;
+};
+void MergeSort(int* A, int first, int last)
+{
+	{
+		if (first < last)
+		{
+			MergeSort(A, first, (first + last) / 2);
+			MergeSort(A, (first + last) / 2 + 1, last);
+			Merge(A, first, last);
+		}
+	}
+};                                     //                      }
+
+
+void quicksort(int* mas, int first, int last)//быстрая сортировка   {
+{
+	int mid, count;
+	int f = first, l = last;
+	mid = mas[(f + l) / 2];
+	do
+	{
+		while (mas[f] < mid) f++;
+		while (mas[l] > mid) l--;
+		if (f <= l)
+		{
+			count = mas[f];
+			mas[f] = mas[l];
+			mas[l] = count;
+			f++;
+			l--;
+		}
+	} while (f < l);
+	if (first < l) quicksort(mas, first, l);
+	if (f < last) quicksort(mas, f, last);
+}                                        //                        }
+void main()
+{
+	setlocale(LC_ALL, "Rus");
+	int g;
+	cout << "Сортировка слиянием - 1 ; быстрая - 2 | Вы выбрали: ";
+	cin >> g;
+	if (g == 1) {//сортировка слиянием
+		cout << endl <<"Сортировка слиянием" << endl << "\n";
+		int i, n;
+		int* A = new int[100];
+		cout << "Размер массива > "; cin >> n;
+		for (i = 1; i <= n; i++)
+		{
+			cout << i << " элемент > "; cin >> A[i];
+		}
+		MergeSort(A, 1, n);
+		cout << "Упорядоченный массив: ";
+		for (i = 1; i <= n; i++) cout << A[i] << " ";
+		delete[]A;
+		system("pause>>void");
+	}
+	else {//быстрая сортировка
+		int first, last, n;
+		cout << endl << "Быстрая сортировка" << endl << "\n";
+		cout << "Введите количество чисел в массиве: ";
+		cin >> n;
+		int* A = new int[n];
+		srand(time(NULL));
+		for (int i = 0; i < n; i++)
+		{
+			cout << i + 1 << " число: "; cin >> A[i];
+		}
+		first = 0; last = n - 1;
+		quicksort(A, first, last);
+		cout << endl << "Результирующий массив: ";
+		for (int i = 0; i < n; i++) cout << A[i] << " ";
+		delete[]A;
+		system("pause>>void");
+	}
+}
